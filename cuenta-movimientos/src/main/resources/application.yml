@@ -1,0 +1,17 @@
+server.port: 8081
+spring:
+  output.ansi.enabled: ALWAYS
+  application.name: cuenta-movimientos
+  datasource:
+    url: jdbc:mysql://localhost:3306/devsu
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
