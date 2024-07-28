@@ -6,9 +6,9 @@ spring:
     url: jdbc:h2:mem:testdb
   sql:
     init:
-      mode: always
+      mode: never
       platform: h2
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop

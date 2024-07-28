@@ -6,7 +6,6 @@ import com.devsu.cliente_persona.cliente.domain.ClienteService;
 import com.devsu.cliente_persona.cliente.infra.mapper.ClienteInMapper;
 import com.devsu.cliente_persona.cliente.infra.mapper.ClienteOutMapper;
 import com.devsu.commons.exception.EntidadNoEncontradaException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +14,15 @@ import java.util.stream.Collectors;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
-    @Autowired private ClienteRepository repository;
-    @Autowired private ClienteInMapper inMapper;
-    @Autowired private ClienteOutMapper outMapper;
+    private final ClienteRepository repository;
+    private final ClienteInMapper inMapper;
+    private final ClienteOutMapper outMapper;
+
+    public ClienteServiceImpl(ClienteRepository repository, ClienteInMapper inMapper, ClienteOutMapper outMapper) {
+        this.repository = repository;
+        this.inMapper = inMapper;
+        this.outMapper = outMapper;
+    }
 
 
     @Override
@@ -60,7 +65,7 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = repository.findById(id)
                 .orElseThrow(() -> new EntidadNoEncontradaException(ClienteErrorMessages.NO_EXISTE_CLIENTE, id));
 
-        // TODO htto desactivar cuenta
+        // TODO http desactivar cuenta
         repository.delete(cliente);
         // TODO cola borrar cuenta
 
