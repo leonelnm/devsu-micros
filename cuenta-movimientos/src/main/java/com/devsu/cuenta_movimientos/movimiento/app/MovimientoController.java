@@ -1,6 +1,6 @@
 package com.devsu.cuenta_movimientos.movimiento.app;
 
-import com.devsu.DevsuCrudController;
+import com.devsu.commons.DevsuCrudController;
 import com.devsu.cuenta_movimientos.movimiento.domain.MovimientoService;
 import com.devsu.cuenta_movimientos.movimiento.infra.MovimientoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movimientos")
-public class MovimientoController implements DevsuCrudController<MovimientoDTO> {
+public class MovimientoController implements DevsuCrudController<MovimientoDTO, MovimientoDTO, Long> {
 
     @Autowired
     private MovimientoService service;
@@ -23,14 +23,14 @@ public class MovimientoController implements DevsuCrudController<MovimientoDTO> 
 
     @PutMapping
     @Override
-    public MovimientoDTO update(MovimientoDTO entity) {
-        return service.update(entity);
+    public MovimientoDTO update(Long id, MovimientoDTO entity) {
+        return service.update(id, entity);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @Override
-    public void delete(MovimientoDTO entity) {
-        service.delete(entity.id());
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
     }
 
     @GetMapping

@@ -22,11 +22,15 @@ public class Cuenta {
     private TipoCuenta tipo;
 
     private BigDecimal saldoInicial;
+
+    @Column(columnDefinition = "boolean default true")
     private Boolean estado;
 
     // 1 cuenta n movimientos
     @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Movimiento> movimientos;
+
+    private Long clienteid;
 
     public Long getId() {
         return id;

@@ -3,14 +3,18 @@ spring:
   output.ansi.enabled: ALWAYS
   application.name: cliente-persona
   datasource:
-    url: jdbc:mysql://localhost:3306/devsu
+    url: jdbc:mysql://localhost:3306/devsudb
     username: test
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/BaseDatos.sql
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
   h2:
     console:
       enabled: true

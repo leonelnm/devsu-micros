@@ -1,12 +1,17 @@
 package com.devsu.cuenta_movimientos.movimiento.infra;
 
+import com.devsu.cuenta_movimientos.movimiento.domain.MovimientoRepository;
 import com.devsu.cuenta_movimientos.movimiento.domain.MovimientoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class MovimientoServiceImpl implements MovimientoService {
+
+    @Autowired
+    private MovimientoRepository repository;
 
     @Override
     public List<MovimientoDTO> getAll() {
@@ -24,11 +29,11 @@ public class MovimientoServiceImpl implements MovimientoService {
     }
 
     @Override
-    public MovimientoDTO update(MovimientoDTO movimientoDTO) {
+    public MovimientoDTO update(Long id, MovimientoDTO movimientoDTO) {
         return null;
     }
     @Override
-    public void delete(Long aLong) {
-
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }

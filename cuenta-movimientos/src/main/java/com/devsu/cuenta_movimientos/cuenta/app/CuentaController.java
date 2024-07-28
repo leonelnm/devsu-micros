@@ -1,6 +1,6 @@
 package com.devsu.cuenta_movimientos.cuenta.app;
 
-import com.devsu.DevsuCrudController;
+import com.devsu.commons.DevsuCrudController;
 import com.devsu.cuenta_movimientos.cuenta.domain.CuentaService;
 import com.devsu.cuenta_movimientos.cuenta.infra.CuentaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,26 +10,26 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cuentas")
-public class CuentaController implements DevsuCrudController<CuentaDTO> {
+public class CuentaController implements DevsuCrudController<CuentaDTO, CuentaDTO, Long> {
 
     @Autowired
     private CuentaService service;
 
     @PostMapping
     @Override
-    public CuentaDTO create(CuentaDTO entity) {
-        return null;
+    public CuentaDTO create(@RequestBody CuentaDTO entity) {
+        return service.save(entity);
     }
 
     @PutMapping
     @Override
-    public CuentaDTO update(CuentaDTO entity) {
+    public CuentaDTO update(Long id, CuentaDTO entity) {
         return null;
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @Override
-    public void delete(CuentaDTO entity) {
+    public void delete(@PathVariable Long id) {
 
     }
 

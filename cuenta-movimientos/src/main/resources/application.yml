@@ -10,8 +10,12 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   h2:
     console:
       enabled: true
       path: /h2-console
+
+proxy:
+  cliente-persona:
+    cliente-url: http://localhost:8080/clientes
