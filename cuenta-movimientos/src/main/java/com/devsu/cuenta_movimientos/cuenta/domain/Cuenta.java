@@ -15,13 +15,15 @@ public class Cuenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String numero;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TipoCuenta tipo;
 
-    private BigDecimal saldoInicial;
+    @Column(nullable = false)
+    private BigDecimal saldo;
 
     @Column(columnDefinition = "boolean default true")
     private Boolean estado;
@@ -30,6 +32,7 @@ public class Cuenta {
     @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Movimiento> movimientos;
 
+    @Column(nullable = false)
     private Long clienteid;
 
     public Long getId() {
@@ -56,12 +59,12 @@ public class Cuenta {
         this.tipo = tipo;
     }
 
-    public BigDecimal getSaldoInicial() {
-        return saldoInicial;
+    public BigDecimal getSaldo() {
+        return saldo;
     }
 
-    public void setSaldoInicial(BigDecimal saldoInicial) {
-        this.saldoInicial = saldoInicial;
+    public void setSaldo(BigDecimal saldo) {
+        this.saldo = saldo;
     }
 
     public Boolean getEstado() {
@@ -78,5 +81,13 @@ public class Cuenta {
 
     public void setMovimientos(List<Movimiento> movimientos) {
         this.movimientos = movimientos;
+    }
+
+    public Long getClienteid() {
+        return clienteid;
+    }
+
+    public void setClienteid(Long clienteid) {
+        this.clienteid = clienteid;
     }
 }

@@ -19,6 +19,10 @@ public class ClientePersonaProxy {
 
     public boolean clienteExiste(Long clienteid) {
         try {
+            if (clienteid == null) {
+                return false;
+            }
+
             String url = String.format("%s/%d", clienteUrl, clienteid);
             ResponseEntity<Void> response = restTemplate.getForEntity(url, Void.class);
             return response.getStatusCode() == HttpStatus.OK;

@@ -6,10 +6,15 @@ import com.devsu.cuenta_movimientos.cuenta.domain.CuentaService;
 import com.devsu.cuenta_movimientos.cuenta.infra.adapters.ClientePersonaProxy;
 import com.devsu.commons.exception.EntidadNoEncontradaException;
 import com.devsu.commons.exception.RegistroDuplicadoException;
+import com.devsu.cuenta_movimientos.cuenta.infra.exception.SaldoInsuficienteException;
+import com.devsu.cuenta_movimientos.movimiento.infra.TipoMovimiento;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CuentaServiceImpl implements CuentaService {
@@ -21,7 +26,7 @@ public class CuentaServiceImpl implements CuentaService {
 
     @Override
     public List<CuentaDTO> getAll() {
-        return List.of();
+        return repository.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -33,10 +38,10 @@ public class CuentaServiceImpl implements CuentaService {
     public CuentaDTO save(CuentaDTO cuentaDTO) {
 
         if(repository.existsByNumero(cuentaDTO.numero())) {
-            throw new RegistroDuplicadoException("Ya existe una cuenta con ese numero");
+            throw new RegistroDuplicadoException(CuentaErrorMessages.DUPLICADO_EXISTE_NUMERO_CUENTA, cuentaDTO.numero());
         }
 
-        if(!clientePersonaProxy.clienteExiste(cuentaDTO.clienteId())){
+        if(!clientePersonaProxy.clienteExiste(cuentaDTO.clienteid())){
             throw new EntidadNoEncontradaException("El cliente no existe");
         }
 
@@ -53,5 +58,37 @@ public class CuentaServiceImpl implements CuentaService {
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByNumero(String numero) {
+        return repository.existsByNumero(numero);
+    }
+
+    @Override
+    public Cuenta getByNumeroCuenta(String numero) {
+        Cuenta cuenta = repository.findByNumero(numero);
+        if(cuenta == null){
+            throw new EntidadNoEncontradaException(CuentaErrorMessages.NO_EXISTE_CUENTA, numero);
+        }
+        return cuenta;
+    }
+
+    @Override
+    public void updateSaldoConMovimiento(@NonNull Cuenta cuenta, @NonNull TipoMovimiento tipoMovimiento, @NonNull BigDecimal valor) {
+        if(tipoMovimiento == TipoMovimiento.RETIRO) {
+            valor = valor.abs().negate();
+        }else if(tipoMovimiento == TipoMovimiento.DEPOSITO) {
+            valor = valor.abs();
+        }
+
+        BigDecimal nuevoSaldo = cuenta.getSaldo().add(valor);
+
+        if(nuevoSaldo.compareTo(BigDecimal.ZERO) < 0){
+            throw new SaldoInsuficienteException();
+        }
+
+        cuenta.setSaldo(nuevoSaldo);
+        repository.save(cuenta);
     }
 }

@@ -1,7 +1,9 @@
 package com.devsu.cuenta_movimientos.movimiento.domain;
 
 import com.devsu.commons.DevsuService;
-import com.devsu.cuenta_movimientos.movimiento.infra.MovimientoDTO;
+import com.devsu.cuenta_movimientos.movimiento.infra.MovimientoInDTO;
+import com.devsu.cuenta_movimientos.movimiento.infra.MovimientoOutDTO;
 
-public interface MovimientoService extends DevsuService<MovimientoDTO, MovimientoDTO, Long> {
+public interface MovimientoService extends DevsuService<MovimientoInDTO, MovimientoOutDTO, Long> {
+
 }

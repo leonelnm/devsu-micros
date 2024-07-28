@@ -15,17 +15,30 @@ public class Movimiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private LocalDateTime fecha;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TipoMovimiento tipo;
 
+    @Column(nullable = false)
     private BigDecimal valor;
-    private BigDecimal saldo;
+
+    @Column(nullable = false)
+    private BigDecimal saldoDisponible;
+
+    @Column(nullable = false)
+    private BigDecimal saldoInicial;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cuentaId")
+    @JoinColumn(name = "cuentaId", nullable = false)
     private Cuenta cuenta;
+
+    public Movimiento(){
+        this.fecha = LocalDateTime.now();
+    }
+
 
     public Long getId() {
         return id;
@@ -59,12 +72,12 @@ public class Movimiento {
         this.valor = valor;
     }
 
-    public BigDecimal getSaldo() {
-        return saldo;
+    public BigDecimal getSaldoDisponible() {
+        return saldoDisponible;
     }
 
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
+    public void setSaldoDisponible(BigDecimal saldoDisponible) {
+        this.saldoDisponible = saldoDisponible;
     }
 
     public Cuenta getCuenta() {
@@ -73,5 +86,13 @@ public class Movimiento {
 
     public void setCuenta(Cuenta cuenta) {
         this.cuenta = cuenta;
+    }
+
+    public BigDecimal getSaldoInicial() {
+        return saldoInicial;
+    }
+
+    public void setSaldoInicial(BigDecimal saldoInicial) {
+        this.saldoInicial = saldoInicial;
     }
 }

@@ -8,4 +8,5 @@ public interface CuentaRepository extends ListCrudRepository<Cuenta, Long> {
 
     boolean existsByNumero(String numero);
 
+    Cuenta findByNumero(String numero);
 }

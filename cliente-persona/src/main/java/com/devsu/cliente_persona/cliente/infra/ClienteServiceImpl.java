@@ -28,7 +28,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteOutDTO getById(Long id) {
         Cliente cliente = repository.findById(id)
-                .orElseThrow(() -> new EntidadNoEncontradaException(String.format(ClienteErrorMessages.NO_EXISTE_CLIENTE, id)));
+                .orElseThrow(() -> new EntidadNoEncontradaException(ClienteErrorMessages.NO_EXISTE_CLIENTE, id));
 
         return outMapper.toDto(cliente);
     }
@@ -50,7 +50,7 @@ public class ClienteServiceImpl implements ClienteService {
                     repository.save(updated);
                     return updated;
                 })
-                .orElseThrow(() -> new EntidadNoEncontradaException(String.format(ClienteErrorMessages.NO_EXISTE_CLIENTE, id)));
+                .orElseThrow(() -> new EntidadNoEncontradaException(ClienteErrorMessages.NO_EXISTE_CLIENTE, id));
 
         return outMapper.toDto(cliente);
     }
@@ -58,7 +58,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public void delete(Long id) {
         Cliente cliente = repository.findById(id)
-                .orElseThrow(() -> new EntidadNoEncontradaException(String.format(ClienteErrorMessages.NO_EXISTE_CLIENTE, id)));
+                .orElseThrow(() -> new EntidadNoEncontradaException(ClienteErrorMessages.NO_EXISTE_CLIENTE, id));
 
         // TODO htto desactivar cuenta
         repository.delete(cliente);

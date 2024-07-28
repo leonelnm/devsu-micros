@@ -2,7 +2,8 @@ package com.devsu.cuenta_movimientos.movimiento.app;
 
 import com.devsu.commons.DevsuCrudController;
 import com.devsu.cuenta_movimientos.movimiento.domain.MovimientoService;
-import com.devsu.cuenta_movimientos.movimiento.infra.MovimientoDTO;
+import com.devsu.cuenta_movimientos.movimiento.infra.MovimientoInDTO;
+import com.devsu.cuenta_movimientos.movimiento.infra.MovimientoOutDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,20 +11,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movimientos")
-public class MovimientoController implements DevsuCrudController<MovimientoDTO, MovimientoDTO, Long> {
+public class MovimientoController implements DevsuCrudController<MovimientoInDTO, MovimientoOutDTO, Long> {
 
-    @Autowired
-    private MovimientoService service;
+    @Autowired private MovimientoService service;
 
     @PostMapping
     @Override
-    public MovimientoDTO create(MovimientoDTO entity) {
-        return service.save(entity);
+    public MovimientoOutDTO create(@RequestBody MovimientoInDTO dto) {
+        return service.save(dto);
     }
 
     @PutMapping
     @Override
-    public MovimientoDTO update(Long id, MovimientoDTO entity) {
+    public MovimientoOutDTO update(Long id, MovimientoInDTO entity) {
         return service.update(id, entity);
     }
 
@@ -35,13 +35,13 @@ public class MovimientoController implements DevsuCrudController<MovimientoDTO, 
 
     @GetMapping
     @Override
-    public List<MovimientoDTO> findAll() {
+    public List<MovimientoOutDTO> findAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
     @Override
-    public MovimientoDTO findById(Long id) {
+    public MovimientoOutDTO findById(Long id) {
         return service.getById(id);
     }
 }

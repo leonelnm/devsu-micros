@@ -36,7 +36,7 @@ public class CuentaController implements DevsuCrudController<CuentaDTO, CuentaDT
     @GetMapping
     @Override
     public List<CuentaDTO> findAll() {
-        return List.of();
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
