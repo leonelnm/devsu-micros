@@ -2,7 +2,7 @@ package com.devsu.cuenta_movimientos.cuenta.app;
 
 import com.devsu.commons.DevsuCrudController;
 import com.devsu.cuenta_movimientos.cuenta.domain.CuentaService;
-import com.devsu.cuenta_movimientos.cuenta.infra.CuentaDTO;
+import com.devsu.cuenta_movimientos.cuenta.infra.dto.CuentaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

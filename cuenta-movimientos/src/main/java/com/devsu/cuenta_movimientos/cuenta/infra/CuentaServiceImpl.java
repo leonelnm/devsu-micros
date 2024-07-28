@@ -6,6 +6,7 @@ import com.devsu.cuenta_movimientos.cuenta.domain.CuentaService;
 import com.devsu.cuenta_movimientos.cuenta.infra.adapters.ClientePersonaProxy;
 import com.devsu.commons.exception.EntidadNoEncontradaException;
 import com.devsu.commons.exception.RegistroDuplicadoException;
+import com.devsu.cuenta_movimientos.cuenta.infra.dto.CuentaDTO;
 import com.devsu.cuenta_movimientos.cuenta.infra.exception.SaldoInsuficienteException;
 import com.devsu.cuenta_movimientos.movimiento.infra.TipoMovimiento;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +91,10 @@ public class CuentaServiceImpl implements CuentaService {
 
         cuenta.setSaldo(nuevoSaldo);
         repository.save(cuenta);
+    }
+
+    @Override
+    public List<Cuenta> getCuentasByCliente(Long clienteid) {
+        return repository.findAllByClienteid(clienteid);
     }
 }

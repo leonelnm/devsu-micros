@@ -1,4 +1,6 @@
-package com.devsu.cuenta_movimientos.cuenta.infra;
+package com.devsu.cuenta_movimientos.cuenta.infra.dto;
+
+import com.devsu.cuenta_movimientos.cuenta.infra.TipoCuenta;
 
 import java.math.BigDecimal;
 

@@ -1,5 +1,6 @@
 package com.devsu.cuenta_movimientos.cuenta.infra.adapters;
 
+import com.devsu.cuenta_movimientos.cuenta.infra.dto.ClienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -34,4 +35,16 @@ public class ClientePersonaProxy {
         }
     }
 
+    public ClienteDTO getCliente(Long clienteid) {
+        try {
+            String url = String.format("%s/%d", clienteUrl, clienteid);
+            ResponseEntity<ClienteDTO> response = restTemplate.getForEntity(url, ClienteDTO.class);
+            return response.getBody();
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return null;
+            }
+            return null;
+        }
+    }
 }
