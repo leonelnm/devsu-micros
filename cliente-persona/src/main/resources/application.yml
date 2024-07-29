@@ -3,9 +3,9 @@ spring:
   output.ansi.enabled: ALWAYS
   application.name: cliente-persona
   datasource:
-    url: jdbc:mysql://localhost:3306/devsudb
-    username: test
-    password: test
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/devsudb}
+    username: ${SPRING_DATASOURCE_USERNAME:test}
+    password: ${SPRING_DATASOURCE_PASSWORD:test}
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:

@@ -1,0 +1,48 @@
+services:
+  mysql:
+    image: mysql:9.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: devsudb
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - microservicios-network
+
+  cliente-personas:
+    image: cliente-persona:latest
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/devsudb
+      SPRING_DATASOURCE_USERNAME: test
+      SPRING_DATASOURCE_PASSWORD: test
+    networks:
+      - microservicios-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  cuenta-movimientos:
+    image: cuenta-movimientos:latest
+    ports:
+      - 8081:8081
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/devsudb
+      SPRING_DATASOURCE_USERNAME: test
+      SPRING_DATASOURCE_PASSWORD: test
+      PROXY_CLIENTE_PERSONA_CLIENTE_URL: http://cliente-personas:8080/clientes
+    networks:
+      - microservicios-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+networks:
+  microservicios-network:

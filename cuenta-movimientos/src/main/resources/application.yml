@@ -3,9 +3,9 @@ spring:
   output.ansi.enabled: ALWAYS
   application.name: cuenta-movimientos
   datasource:
-    url: jdbc:mysql://localhost:3306/devsudb
-    username: test
-    password: test
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/devsudb}
+    username: ${SPRING_DATASOURCE_USERNAME:test}
+    password: ${SPRING_DATASOURCE_PASSWORD:test}
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
@@ -18,4 +18,4 @@ spring:
 
 proxy:
   cliente-persona:
-    cliente-url: http://localhost:8080/clientes
+    cliente-url: ${PROXY_CLIENTE_PERSONA_CLIENTE_URL:http://localhost:8080/clientes}
