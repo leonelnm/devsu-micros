@@ -1,4 +1,16 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    networks:
+      - microservicios-network
+
   mysql:
     image: mysql:9.0
     environment:
@@ -23,6 +35,10 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/devsudb
       SPRING_DATASOURCE_USERNAME: test
       SPRING_DATASOURCE_PASSWORD: test
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: user
+      SPRING_RABBITMQ_PASSWORD: password
     networks:
       - microservicios-network
     depends_on:
@@ -37,6 +53,10 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/devsudb
       SPRING_DATASOURCE_USERNAME: test
       SPRING_DATASOURCE_PASSWORD: test
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: user
+      SPRING_RABBITMQ_PASSWORD: password
       PROXY_CLIENTE_PERSONA_CLIENTE_URL: http://cliente-personas:8080/clientes
     networks:
       - microservicios-network
