@@ -31,8 +31,8 @@ public class CuentaServiceImpl implements CuentaService {
     }
 
     @Override
-    public CuentaDTO getById(Long aLong) {
-        return null;
+    public CuentaDTO getById(Long id) {
+        return repository.findById(id).map(mapper::toDto).orElseThrow(() -> new EntidadNoEncontradaException(CuentaErrorMessages.NO_EXISTE_CUENTA, id));
     }
 
     @Override

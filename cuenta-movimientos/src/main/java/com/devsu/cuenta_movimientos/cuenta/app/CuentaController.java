@@ -4,6 +4,7 @@ import com.devsu.commons.DevsuCrudController;
 import com.devsu.cuenta_movimientos.cuenta.domain.CuentaService;
 import com.devsu.cuenta_movimientos.cuenta.infra.dto.CuentaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class CuentaController implements DevsuCrudController<CuentaDTO, CuentaDT
     private CuentaService service;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     @Override
     public CuentaDTO create(@RequestBody CuentaDTO entity) {
         return service.save(entity);
@@ -42,6 +44,6 @@ public class CuentaController implements DevsuCrudController<CuentaDTO, CuentaDT
     @GetMapping("/{id}")
     @Override
     public CuentaDTO findById(Long id) {
-        return null;
+        return service.getById(id);
     }
 }
