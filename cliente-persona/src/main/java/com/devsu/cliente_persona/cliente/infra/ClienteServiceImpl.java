@@ -3,9 +3,12 @@ package com.devsu.cliente_persona.cliente.infra;
 import com.devsu.cliente_persona.cliente.domain.Cliente;
 import com.devsu.cliente_persona.cliente.domain.ClienteRepository;
 import com.devsu.cliente_persona.cliente.domain.ClienteService;
+import com.devsu.cliente_persona.cliente.infra.adapters.MessageProducer;
 import com.devsu.cliente_persona.cliente.infra.mapper.ClienteInMapper;
 import com.devsu.cliente_persona.cliente.infra.mapper.ClienteOutMapper;
 import com.devsu.commons.exception.EntidadNoEncontradaException;
+import com.devsu.commons.infra.messaging.OperationConstants;
+import com.devsu.commons.infra.messaging.dto.CuentaMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +20,14 @@ public class ClienteServiceImpl implements ClienteService {
     private final ClienteRepository repository;
     private final ClienteInMapper inMapper;
     private final ClienteOutMapper outMapper;
+    private final MessageProducer messageProducer;
 
-    public ClienteServiceImpl(ClienteRepository repository, ClienteInMapper inMapper, ClienteOutMapper outMapper) {
+
+    public ClienteServiceImpl(ClienteRepository repository, ClienteInMapper inMapper, ClienteOutMapper outMapper, MessageProducer messageProducer) {
         this.repository = repository;
         this.inMapper = inMapper;
         this.outMapper = outMapper;
+        this.messageProducer = messageProducer;
     }
 
 
@@ -65,9 +71,7 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = repository.findById(id)
                 .orElseThrow(() -> new EntidadNoEncontradaException(ClienteErrorMessages.NO_EXISTE_CLIENTE, id));
 
-        // TODO http desactivar cuenta
+        messageProducer.sendMessageCuenta(new CuentaMessage(OperationConstants.CUENTA_ELIMINAR, cliente.getId()));
         repository.delete(cliente);
-        // TODO cola borrar cuenta
-
     }
 }

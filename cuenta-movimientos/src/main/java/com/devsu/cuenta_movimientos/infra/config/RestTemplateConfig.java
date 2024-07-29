@@ -1,4 +1,4 @@
-package com.devsu.cuenta_movimientos.cuenta.infra.config;
+package com.devsu.cuenta_movimientos.infra.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

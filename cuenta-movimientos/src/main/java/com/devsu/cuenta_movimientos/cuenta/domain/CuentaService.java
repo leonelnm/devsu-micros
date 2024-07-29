@@ -13,4 +13,5 @@ public interface CuentaService extends DevsuService<CuentaDTO, CuentaDTO, Long> 
     Cuenta getByNumeroCuenta(String numero);
     void updateSaldoConMovimiento(Cuenta cuenta, TipoMovimiento tipoMovimiento, BigDecimal valor);
     List<Cuenta> getCuentasByCliente(Long clienteid);
+    void eliminarByCliente(Long clienteid);
 }

@@ -97,4 +97,9 @@ public class CuentaServiceImpl implements CuentaService {
     public List<Cuenta> getCuentasByCliente(Long clienteid) {
         return repository.findAllByClienteid(clienteid);
     }
+
+    @Override
+    public void eliminarByCliente(Long clienteid) {
+        repository.findAllByClienteid(clienteid).forEach(repository::delete);
+    }
 }
